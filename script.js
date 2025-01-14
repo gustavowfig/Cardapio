@@ -32,7 +32,7 @@ closeModalBtn.addEventListener("click", function(){
 
 menu.addEventListener("click", function(event){
     // console.log(event.target)
-    let parentButton = event.target.closest("add-to-cart-btn")
+    let parentButton = event.target.closest(".add-to-cart-btn")
 
     if(parentButton){
         const name = parentButton.getAttribute("data-name")
@@ -97,10 +97,9 @@ function updateCartModal(){
 
     })
 
-    cartTotal.textContent = total.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+    cartTotal.textContent = cart.length > 0 
+    ? total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) 
+    : "R$ 0,00";
 
     cartCounter.innerText = cart.length;
 
@@ -110,7 +109,7 @@ function updateCartModal(){
 // Função para remover o item do carrinho
 cartItemsContainer.addEventListener("click", function (event){
     if(event.target.classList.contains("remove-from-cart-btn")){
-        const name = event.target.getAttribute(data-name)
+        const name = event.target.getAttribute("data-name")
 
         removeItemCart(name);
     }
@@ -150,23 +149,18 @@ addressInput.addEventListener("input", function(event){
 
 
 // Finalizar pedido
-checkoutBtn.addEventListener("click", function(){
-
+checkoutBtn.addEventListener("click", function () {
     const isOpen = checkRestaurantOpen();
-    if(isOpen){
-
+    if (!isOpen) {
         Toastify({
             text: "Ops o restaurante está fechado!",
             duration: 3000,
             close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "#ef4444",
-            },
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: { background: "#ef4444" },
         }).showToast();
-
         return;
     }
 
@@ -209,7 +203,7 @@ const isOpen = checkRestaurantOpen();
 
 if(isOpen){
     spanItem.classList.remove("bg-red-500");
-    spanItem.classList.add(bg-green-600)
+    spanItem.classList.add("bg-green-600")
 }else{
     spanItem.classList.remove("bg-green-600")
     spanItem.classList.add("bg-red-500")
